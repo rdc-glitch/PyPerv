@@ -285,9 +285,14 @@ def translation_perversion():
             solperv_homo_long = solperv_homo_long[int((np.size(solperv_homo_long[:,0])-sizedesiree)/2):-int((np.size(solperv_homo_long[:,0])-sizedesiree)/2),:]
         else:
             newsol = np.zeros((sizedesiree, 3))
-            newsol[int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2):-int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2),:] = solperv_homo_long
-            newsol[:int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2),:] = solperv_homo_long[0,:]
-            newsol[-int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2):,:] = solperv_homo_long[-1,:]
+            try:
+                newsol[int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2):-int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2),:] = solperv_homo_long
+                newsol[:int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2),:] = solperv_homo_long[0,:]
+                newsol[-int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2):,:] = solperv_homo_long[-1,:]
+            except:
+                newsol[int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2):-int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2)-1,:] = solperv_homo_long
+                newsol[:int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2),:] = solperv_homo_long[0,:]
+                newsol[-int(-(np.size(solperv_homo_long[:,0])-sizedesiree)/2)-1:,:] = solperv_homo_long[-1,:]                
             solperv_homo_long = newsol
             #plt.plot(newsol)
             #plt.show()
