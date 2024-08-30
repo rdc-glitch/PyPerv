@@ -25,7 +25,7 @@ python3 find_heteroclinic.py
 
 ## The Kirchooff rod
 
-At equilibrium, for static configurations, the deformation of the rod is due to external forces $\mathbf{f_{ext}}$ and moments $\mathbf{m_{ext}}$ which are balanced by the internal force $\mathbf{F}(s)$ and internal moment $\mathbf{M}(s)$
+At equilibrium, for static configurations $\mathbf{x}(s)$, the deformation of the rod is due to external forces $\mathbf{f_{ext}}$ and moments $\mathbf{m_{ext}}$ which are balanced by the internal force $\mathbf{F}(s)$ and internal moment $\mathbf{M}(s)$
 
 $\mathbf{F}'(s) + \mathbf{f_{ext}} = 0 $
 
@@ -83,14 +83,26 @@ The function returns :
 - A pdf file containing a plot of the obtained solution in the torsion ($\kappa_3$ )- frenet curvature space, expressed in units of $\kappa_0$. As well as the solution in spatial coordinates. 
 
 <p align="center">
-  <img src="./sol_find_perv.png" width="150" title="hover text">
+  <img src="./sol_find_perv.png" width="250" title="hover text">
 </p>
 
 
 - A table including the following quantities for every point along the rod : 
 
+<p align="center">
+  <img src="./table.png" width="650" title="hover text">
+</p>
 
+Corresponding respectively to the coordinates of the centerline of the rod in laboratory frame, Darboux curvature, end parameters of the simulation which are repeated every line. The last column corresponds to the curvilinear distance between points which can be tuned directly in the code as 'tres'.
 
+## Example of usage : translation of a rod with one perversion
+
+Executing 
+
+```
+python3 translation_perversion.py
+```
+computes the configuration connecting two helices of different chiralities for varying axial load, thereby corresponding, at fixed total arclength of the rod, to an axial extension.
 
 
 ## References
