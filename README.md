@@ -102,7 +102,7 @@ Executing
 ```
 python3 translation_perversion.py
 ```
-computes the configuration connecting two helices of different chiralities for varying axial load, thereby corresponding, at fixed total arclength of the rod, to an axial extension.
+computes the configuration connecting two helices of different chiralities for varying axial load, thereby corresponding, at fixed total arclength of the rod, to an axial extension. Note that the number of points force at which the configuration is solved is an input and can be set to low values for trying out the code. 
 
 
 ## References
