@@ -1,6 +1,6 @@
 # PyPerv
 
-PyPerv is a python package allowing to compute for the perversion solutions in a multi-circle rod ( helix with zero pitch ) for a given axial load imposed on the rod. 
+PyPerv is a python package allowing to compute for the perversion solutions in a multi-circle rod ( helix with zero pitch ) for different axial loads imposed on the rod, based on a shooting technique of the Kirchhoff rod equilibrium equations. 
 
 Requirements : 
 
