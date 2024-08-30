@@ -1,3 +1,2 @@
 # PyPerv
-Perversion solver
-$$ 4 x = 7y$$
+Perversion solver $$ 4 x = 7y$$
