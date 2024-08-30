@@ -52,7 +52,7 @@ where the $\kappa_{i0}(s)$, is the intrinsic curvature vector, describes the int
   
   $\kappa_3' = \left[(1-\Lambda)\kappa_1\kappa_2- \kappa_0\kappa_2\right]/\Gamma$
 
-For further theoretical details, see [[1]](#1).
+For further theoretical details, see [[1]](#1) and ??.
 
 ## Method 
 
@@ -66,6 +66,19 @@ If we look for the heteroclinic connection, we set the phase so that the traject
 
 
 ## Codes
+
+The simplest function find_heteroclinic.py computes the perversion solution for a given set of parameters. The entry parameters are succesvely to be entered in the terminal, as prompted in the following order :
+
+-
+
+-
+
+-
+
+-
+
+
+
 
 
 ## References
