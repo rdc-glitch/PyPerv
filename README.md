@@ -67,15 +67,27 @@ If we look for the heteroclinic connection, we set the phase so that the traject
 
 ## Codes
 
-The simplest function find_heteroclinic.py computes the perversion solution for a given set of parameters. The entry parameters are succesvely to be entered in the terminal, as prompted in the following order :
+The simplest function find_perversion.py computes the lone perversion solution for a given set of parameters. The entry parameters are succesvely to be entered in the terminal, as prompted in the following order :
 
--
+- $\Gamma$ : bend-to-twist ratio
 
--
+- $\Lambda$ : ratio of bending rigidity of the rod between the straight direction and curved direction.
 
--
+- Value of axial load expressed in $B_1\kappa_0^2$ unit : between 0 and $1/\Gamma$.
 
--
+- Number of coils of the helix in its natural state.
+
+
+The function returns :
+
+- A pdf file containing a plot of the obtained solution in the torsion ($\kappa_3$ )- frenet curvature space, expressed in units of $\kappa_0$. As well as the solution in spatial coordinates. 
+
+<p align="center">
+  <img src="./sol_find_perv.png" width="150" title="hover text">
+</p>
+
+
+- A table including the following quantities for every point along the rod : 
 
 
 
