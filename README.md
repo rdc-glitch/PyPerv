@@ -21,6 +21,8 @@ To compile the code, open a terminal and directly execute the following command,
 python3 find_heteroclinic.py
 ```
 
+
+
 ## The Kirchooff rod
 
 At equilibrium, for static configurations, the deformation of the rod is due to external forces $\mathbf{f_{ext}}$ and moments $\mathbf{m_{ext}}$ which are balanced by the internal force $\mathbf{F}(s)$ and internal moment $\mathbf{M}(s)$
@@ -50,6 +52,7 @@ where the $\kappa_{i0}(s)$, is the intrinsic curvature vector, describes the int
   
   $\kappa_3' = \left[(1-\Lambda)\kappa_1\kappa_2- \kappa_0\kappa_2\right]/\Gamma$
 
+For further theoretical details, see [[1]](#1).
 
 ## Method 
 
@@ -63,3 +66,8 @@ If we look for the heteroclinic connection, we set the phase so that the traject
 
 
 ## Codes
+
+
+## References
+<a id="1">[1]</a> 
+McMillen, Goriely Tendril Perversion in Intrinsically Curved Rods . J. Nonlinear Sci. 12, 241–281 (2002). https://doi.org/10.1007/s00332-002-0493-1
