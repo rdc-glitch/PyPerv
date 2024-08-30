@@ -56,8 +56,9 @@ where the $\kappa_{i0}(s)$, is the intrinsic curvature vector, describes the int
 Defining $\mathbf{X}= (T_1, T_2, T_3, \kappa_1, \kappa_2, \kappa_3)$. At a given helix $\mathbf{X_h}=  (\gamma\tau\kappa, 0,\gamma\tau^2, \kappa,0, \tau)$, the Jacobian of the Kirchhoff equations has eigenvalues  $0,0, \pm\sigma \pm i \omega$. To solve for the orbit linking $\mathbf{X_h}$ to another point, we place one initial point on the unstable manifold of the fixed point $\mathbf{X_h}$, with eigenvector $\mathbf{v_+^{(u)}}$ and we set our intial condition as 
 $\mathbf{X}(0)  = \mathbf{X_+} +\epsilon \left(\mathcal{R}e \left(\mathbf{v_+^{(u)}}\right) \cos(\theta) +  \mathcal{I}m \left(\mathbf{v_+^{(u)}}\right) \sin(\theta)\right)$
 with $\epsilon$ small($\approx 10^{-4}$) so that the initial condition lies close to the fixed point. And we set the phase $\theta$ so that the trajectory converges towards the desired point. 
-![plot](./shooting_different_phases.png)
-
+<p align="center">
+  <img src="./shooting_different_phases.png" width="350" title="hover text">
+</p>
 If we look for the heteroclinic connection, we set the phase so that the trajectory goes near the helix of opposite chirality. The solution is then truncated at $\kappa_3 = 0$, and the final solution is constructed by taking the mirror symmetry of the truncated part + the truncated part. 
 
 
