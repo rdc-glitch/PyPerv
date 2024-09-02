@@ -21,6 +21,12 @@ To compile the code, open a terminal and directly execute the following command,
 python3 find_heteroclinic.py
 ```
 
+The compilation of the code 'translation_perversion.py' requires the package pillow for gif rendering. To install, execute in a terminal
+
+```
+pip3 install --upgrade pillow
+```
+
 
 
 ## The Kirchooff rod
@@ -102,8 +108,11 @@ Executing
 ```
 python3 translation_perversion.py
 ```
-computes the configuration connecting two helices of different chiralities for varying axial load, thereby corresponding, at fixed total arclength of the rod, to an axial extension. Note that the number of points force at which the configuration is solved is an input and can be set to low values for trying out the code. 
+computes the configuration connecting two helices of different chiralities for varying axial load, thereby corresponding, at fixed total arclength of the rod, to an axial extension. Note that the number of points force at which the configuration is solved is an input and can be set to low values for trying out the code. The code creates a folder repertoring the configurations at several axial forces, and creates a gif plotting an animation of the extension of the perverted rod, with the corresponding conformation in curvature space and the force displacement curve $T(z)$, where $z$ stands for the extension normalized by the total arclength of the rod.
 
+<p align="center">
+  <img src="./gif.jpg" width="650" title="hover text">
+</p>
 
 ## References
 <a id="1">[1]</a> 
