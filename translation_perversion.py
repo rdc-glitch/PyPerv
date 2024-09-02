@@ -3,6 +3,8 @@ from autograd import grad, jacobian
 from scipy.integrate import  odeint
 import matplotlib.pylab as plt
 from numpy import *
+import os
+from PIL import Image
 
 plt.rcParams["figure.autolayout"] = True
 
@@ -15,6 +17,9 @@ font = {'family': 'Latin Modern Roman',
     'weight': 'normal',
     'size': 20,
     }
+
+
+
 def translation_perversion():
     K = 1
     tau_0 = 0
@@ -26,7 +31,7 @@ def translation_perversion():
     epsilon = 1e-4
     tres =0.03
     Lambda = (input('Value of Lambda (positive float) - press enter for default value - :'))
-    tailletheta =1000
+    tailletheta =500
     if Lambda == '':
         Lambda = 1
     else:
@@ -37,12 +42,14 @@ def translation_perversion():
     else:
         numberofcoils = float(numberofcoils)
 
-    resolution_force = (input('Number of points in force (positive integer) - press enter for default value 10 - :'))
+    resolution_force = (input('Number of points in force (positive integer) - press enter for default value 8 - :'))
     if resolution_force == '':
-        resolution_force = 10
+        resolution_force = 8
     else:
         resolution_force = int(resolution_force)
-
+    folder_name = 'fig_result_Gamma_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_Numberofcoils_'+str(numberofcoils)+'_numberofforcepoints_'+str(resolution_force)
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
     def kircchoff_equation(t, z):
     	F_1, F_2, F_3, kappa_1, kappa_2, kappa_3 = z
     	return [F_2*kappa_3-F_3*kappa_2, F_3*kappa_1-F_1*kappa_3, F_1*kappa_2-F_2*kappa_1, F_2+(Lambda-Gamma)*kappa_3*kappa_2, -(F_1+(1-Gamma)*kappa_3*kappa_1-K*kappa_3)/Lambda, ((1-Lambda)*kappa_1*kappa_2-K*kappa_2)/Gamma]
@@ -52,7 +59,7 @@ def translation_perversion():
     def kircchoff_equation_for_jacobian(z):
     	return np.array([z[1]*z[5]-z[2]*z[4], z[2]*z[3]-z[0]*z[5], z[0]*z[4]-z[1]*z[3], z[1]+(Lambda-Gamma)*z[5]*z[4], -(z[0]+(1-Gamma)*z[5]*z[3]-K*z[5])/Lambda, ((1-Lambda)*z[3]*z[4]-K*z[4])/Gamma])
 
-
+    tabletotal = []
 
 
     jacobianfunc = jacobian(kircchoff_equation_for_jacobian)
@@ -146,8 +153,8 @@ def translation_perversion():
     Xbig = np.zeros((resolution_force, sizedesiree, 3))
     kappabig = np.zeros((resolution_force, sizedesiree, 3))
     Tafaire = np.linspace(0.15, 0.8/Gamma, resolution_force)
-    figfin= plt.figure()
-    axfin = figfin.add_subplot(111)
+    #figfin= plt.figure()
+    #axfin = figfin.add_subplot(111)
     for axialload in Tafaire:
         tailletheta = 500
         print(axialload)
@@ -297,18 +304,18 @@ def translation_perversion():
             #plt.plot(newsol)
             #plt.show()
         cm = 1/2.54
-        fig = plt.figure(figsize=plt.figaspect(1.5 ))
-        ax3 = fig.add_subplot(2, 1, 1)
-        ax3.plot(solperv_homo_long[:,2], np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2), 'r-', linewidth = 3)
-        axfin.plot(solperv_homo_long[:,2], np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2), 'k-')
-        ax3.set_ylim((np.min(np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2))*0.666, 1.333*np.max(np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2))))
-        ax3.tick_params( length=4, width=0.5)
-        ax3.set_ylabel(r'$\tau/\kappa_0$', fontsize = 15)
-        ax3.set_xlabel(r'$\kappa/\kappa_0$', fontsize = 15)
-        for label in ax3.yaxis.get_majorticklabels():
-            label.set_fontsize(5)
-        for label in ax3.xaxis.get_majorticklabels():
-            label.set_fontsize(5)
+        #fig = plt.figure(figsize=plt.figaspect(1.5 ))
+        #ax3 = fig.add_subplot(2, 1, 1)
+        #ax3.plot(solperv_homo_long[:,2], np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2), 'r-', linewidth = 3)
+        #axfin.plot(solperv_homo_long[:,2], np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2), 'k-')
+        #ax3.set_ylim((np.min(np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2))*0.666, 1.333*np.max(np.sqrt(solperv_homo_long[:,0]**2+solperv_homo_long[:,1]**2))))
+        #ax3.tick_params( length=4, width=0.5)
+        #ax3.set_ylabel(r'$\tau/\kappa_0$', fontsize = 15)
+        #ax3.set_xlabel(r'$\kappa/\kappa_0$', fontsize = 15)
+        #for label in ax3.yaxis.get_majorticklabels():
+        #    label.set_fontsize(5)
+        #for label in ax3.xaxis.get_majorticklabels():
+        #    label.set_fontsize(5)
         #plt.show()
         manifold = solperv_homo_long
         size = np.size(manifold[:,2])
@@ -346,7 +353,7 @@ def translation_perversion():
             B[i, :] = (B[i-1, :] - ds*taufren[i-1] * N[i-1,:]  )/np.sum((B[i-1, :] - ds*taufren[i-1] * N[i-1,:]  )**2)
 
 
-        X_0 = [-manifold[0, 0]/(manifold[0, 0]**2+manifold[0, 2]**2)*0.5, manifold[0, 0]/(manifold[0, 0]**2+manifold[0, 2]**2)*np.sqrt(3)/2,0]
+        X_0 = [-0,0,0]
         X = np.zeros((np.size(temps), 3))
         X[0, :] = X_0
         for i in range(1,np.size(T[:,0])):
@@ -355,7 +362,7 @@ def translation_perversion():
 
         size = np.size(manifold[:,2])
         xi = np.pi/2-np.arctan(manifold[:, 1]/manifold[:, 0])
-        ds = 0.1
+    #ds = 0.1
         #print(ds)
         xidev = np.zeros(size)
         for i in range(1,size):
@@ -382,15 +389,138 @@ def translation_perversion():
             P_circle = r*cos(t)[:,newaxis]*u + r*sin(t)[:,newaxis]*cross(n,u) + C
             return P_circle
         #fig = plt.figure()
-        ax3d = fig.add_subplot(2, 1, 2, projection='3d')
+
+        #lignetheta0 = np.array(lignetheta0)
+        #for j in range(len(thetaefflist)):
+            #if j == 3:
+                #ax3d.plot(lignetheta0[:, j,0], lignetheta0[:,j,1], lignetheta0[:,j,2], 'r', linewidth = 1)
+            #else:
+                #ax3d.plot(lignetheta0[:, j,0], lignetheta0[:,j,1], lignetheta0[:,j,2], 'k', linewidth = 1)
+        #ax3d.axis('off')
+        #ax3d.set_box_aspect((1,1,1), zoom = 4)
+
+        #ax3d.view_init(elev=0, azim=66)
+        #ax3d.set_zlim3d(np.min(X[:,2]-X[int(np.size((X[:,0]))/2),2]), np.max(X[:,2]-X[int(np.size((X[:,0]))/2),2]))
+        #ax3d.set_ylim3d(np.min(X[:,2]-X[int(np.size((X[:,0]))/2),2]), np.max(X[:,2]-X[int(np.size((X[:,0]))/2),2]))
+        #ax3d.set_xlim3d(np.min(X[:,2]-X[int(np.size((X[:,0]))/2),2]), np.max(X[:,2]-X[int(np.size((X[:,0]))/2),2]))
+        #plt.savefig('PERVERSION_GAMMA_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_N0_'+str(numberofcoils)+'_T_'+str(axialload)+'.pdf' , transparent=True)
+        BIGtable = np.zeros((np.size(manifold[:,0]), 11))
+        #BIGtable[0,:] = np.array(['Xx', 'Xy', 'Xz', 'kappa1', 'kappa2', 'kappa3', 'Gamma', 'Lambda', 'N_0', 'Tz', 's_res'])
+        BIGtable[:,9] = axialload
+        BIGtable[:,8] = numberofcoils
+        BIGtable[:,10] = tres
+        BIGtable[:,7] = Lambda
+        BIGtable[:,6] = Gamma
+        BIGtable[:,5] = manifold[:,2]
+        BIGtable[:,4] = manifold[:,1]
+        BIGtable[:,3] = manifold[:,0]
+        BIGtable[:,2] = X[:,2]
+        BIGtable[:,1] = X[:,1]
+        BIGtable[:,0] = X[:,0]
+        tabletotal.append(BIGtable)
+
+        #np.savetxt('PERVERSION_GAMMA_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_N0_'+str(numberofcoils)+'_T_'+str(axialload)+'.txt', BIGtable )
+        #plt.show()
+        #plt.savefig('PERVERSION_GAMMA_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_N0_'+str(numberofcoils)+'_T_'+str(axialload)+'.obj' , transparent=True)
+        #plt.pause(0.1)
+        #plt.close()
+    i = 0
+    for biggy in tabletotal:
+        fig = plt.figure()
+        kappalist = np.linspace(0.0, 1,1000)
+        taulist = np.sqrt(1/Gamma*kappalist*(1-kappalist))
+        ax = plt.gca()
+        plt.plot(kappalist, taulist, 'k--')
+        plt.plot(kappalist, -taulist, 'k--')
+        for biggyother in tabletotal:
+            plt.plot(np.sqrt(biggyother[:,3]**2+biggyother[:,4]**2), biggyother[:,5], 'k')
+        plt.plot(np.sqrt(biggy[:,3]**2+biggy[:,4]**2), biggy[:,5], 'r')
+        ax.tick_params( length=4, width=0.5)
+        ax.set_ylabel(r'$\tau/\kappa_0$', fontsize = 15)
+        ax.set_xlabel(r'$\kappa/\kappa_0$', fontsize = 15)
+        plt.savefig(folder_name+'/kappa_vs_tau_'+str(Tafaire[i])+'.jpeg', dpi=300)
+        fig = plt.figure()
+        kappalist = np.linspace(0.0, 1,1000)
+        ax = plt.gca()
+        k = 0
+
+        zplot = taulist/np.sqrt(taulist**2+kappalist**2)
+        Tplot = (1/kappalist-1+Gamma)*taulist*np.sqrt(taulist**2+kappalist**2)
+
+        plt.plot(zplot, Tplot, 'k-')
+        plt.plot(np.abs(biggy[0,5])/np.sqrt(biggy[0,5]**2+biggy[0,3]**2), Tafaire[i], 'ro', markersize = 10)
+    #plt.plot(biggy[:,1])
+        ax.tick_params( length=4, width=0.5)
+        ax.set_ylabel(r'$T/B_1\kappa_0^2$', fontsize = 15)
+        ax.set_xlabel(r'$z$', fontsize = 15)
+        plt.savefig(folder_name+'/T_vs_z_'+str(Tafaire[i])+'.jpeg', dpi=300)        
+        size = np.size(manifold[:,2])
+        xi = np.pi/2-np.arctan(manifold[:, 1]/manifold[:, 0])
+        ds = tres
+        i_temp = i
+        #print(ds)
+        manifold = biggy[:,3:6]
+        X = biggy[:,:3]
+        xidev = np.zeros(size)
+        for i in range(1,size):
+            xidev[i] = (xi[i]-xi[i-1])/ds
+        kappafren, taufren = np.sqrt(manifold[:, 0]**2+manifold[:, 1]**2), manifold[:, 2]-xidev
+
+        temps = np.linspace(0,1, size)
+        xi = np.pi/2-np.arctan(manifold[:, 1]/manifold[:, 0])
+        ds = tres
+        #print(ds)
+        xidev = np.zeros(size)
+        for i in range(1,size):
+            xidev[i] = (xi[i]-xi[i-1])/ds
+        kappafren, taufren = np.sqrt(manifold[:, 0]**2+manifold[:, 1]**2), manifold[:, 2]+xidev
+        #kappafren, taufren = manifold[:,0]*np.ones((size,1)), manifold[:,2]
+        temps = np.linspace(0,1, size)
+        T = np.zeros((size, 3))
+        N = np.zeros((size, 3))
+        B = np.zeros((size, 3))
+
+
+        T[0,:],N[0,:], B[0,:] = [0, kappafren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2),taufren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2)], [1, 0, 0], [0, -taufren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2), kappafren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2)] #[0, 0,1], [1, 0, 0], [0,1,0] 
+        for i in range(1, size):
+            #print(np.sum(T[i-1, :]**2))
+            T[i, :] = (T[i-1, :] + ds*kappafren[i-1] * N[i-1,:]  )/np.sum((T[i-1, :] + ds*kappafren[i-1] * N[i-1,:]  )**2)
+            N[i, :] = (N[i-1, :] - ds*kappafren[i-1] * T[i-1,:]  + ds*taufren[i-1]*B[i-1,:])/np.sum((N[i-1, :] - ds*kappafren[i-1] * T[i-1,:]  + ds*taufren[i-1]*B[i-1,:])**2)
+            B[i, :] = (B[i-1, :] - ds*taufren[i-1] * N[i-1,:]  )/np.sum((B[i-1, :] - ds*taufren[i-1] * N[i-1,:]  )**2)
+
+
+        d3 = np.zeros((size, 3))
+        d1 = np.zeros((size, 3))
+        d2 = np.zeros((size, 3))
+
+
+        d3[0,:],d2[0,:], d1[0,:]= [0, 0,1],  [0,1,0], [1, 0, 0] # = -np.array([0, kappafren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2),taufren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2)]), np.array([1, 0, 0]), np.array([0, -taufren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2), kappafren[0]/np.sqrt(kappafren[0]**2+taufren[0]**2)]) 
+        for i in range(1, size):
+            #print(np.sum(T[i-1, :]**2))
+            d3[i, :] = (d3[i-1, :] +ds*(manifold[i-1, 1] * d1[i-1,:]) -manifold[i-1, 0] * d2[i-1,:] )
+            d2[i, :] = (d2[i-1, :] + ds*(manifold[i-1, 0] * d3[i-1,:]-manifold[i-1, 2] * d1[i-1,:])  )
+            d1[i, :] = (d1[i-1, :] + ds*(manifold[i-1, 2] * d2[i-1,:]-manifold[i-1, 1] * d3[i-1,:])  )
+
+
+        def generate_circle_by_vectors(t, C, r, n, u):
+            n = n/np.linalg.norm(n)
+            u = u/np.linalg.norm(u)
+            P_circle = r*cos(t)[:,newaxis]*u + r*sin(t)[:,newaxis]*cross(n,u) + C
+            return P_circle
+        #fig = plt.figure()
+        fig = plt.figure()
+        ax3d = fig.gca( projection='3d')
         thetaefflist = [0,np.pi/4, np.pi/2, 3*np.pi/4, np.pi, np.pi+np.pi/4, np.pi+np.pi/2, 2*np.pi-np.pi/4]
         fractionplot = 20
         lignetheta0 = np.zeros((size, len(thetaefflist), 3))
+        X[:,2] = X[:,2]-X[int(np.size(X[:,2])/2), 2]
+        X[int(np.size(X[:,2])/2):, 2] = -np.flip(X[:int(np.size(X[:,2])/2), 2])
+        X[int(np.size(X[:,2])/2):, :2] = np.flip(X[:int(np.size(X[:,2])/2), :2] , axis = 0)
         for i in range(0,size):
             for j in range(len(thetaefflist)):
                 thetaefflist[j] -= xidev[i]*ds/2/np.pi
 
-            P = generate_circle_by_vectors(t, X[i,:]-X[int(np.size((X[:,0]))/2),:],.2, np.transpose(T[i,:]),  np.transpose(B[i,:])   )
+            P = generate_circle_by_vectors(t, X[i,:],.2, np.transpose(T[i,:]),  np.transpose(B[i,:])   )
             for j in range(len(thetaefflist)):
                 indtheta = np.argmin((t-thetaefflist[j])**2)
                 lignetheta0[i,j,0] = P[indtheta, 0]
@@ -428,33 +558,57 @@ def translation_perversion():
         ax3d.axis('off')
         ax3d.set_box_aspect((1,1,1), zoom = 4)
 
-        ax3d.view_init(elev=0, azim=66)
-        ax3d.set_zlim3d(np.min(X[:,2]-X[int(np.size((X[:,0]))/2),2]), np.max(X[:,2]-X[int(np.size((X[:,0]))/2),2]))
-        ax3d.set_ylim3d(np.min(X[:,2]-X[int(np.size((X[:,0]))/2),2]), np.max(X[:,2]-X[int(np.size((X[:,0]))/2),2]))
-        ax3d.set_xlim3d(np.min(X[:,2]-X[int(np.size((X[:,0]))/2),2]), np.max(X[:,2]-X[int(np.size((X[:,0]))/2),2]))
-        #plt.savefig('PERVERSION_GAMMA_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_N0_'+str(numberofcoils)+'_T_'+str(axialload)+'.pdf' , transparent=True)
-        BIGtable = np.zeros((np.size(manifold[:,0]), 11))
-        #BIGtable[0,:] = np.array(['Xx', 'Xy', 'Xz', 'kappa1', 'kappa2', 'kappa3', 'Gamma', 'Lambda', 'N_0', 'Tz', 's_res'])
-        BIGtable[:,9] = axialload
-        BIGtable[:,8] = numberofcoils
+        ax3d.view_init(elev=90, azim=90)
+        ax3d.set_zlim3d(-sizedesiree*tres, sizedesiree*tres)
+        ax3d.set_ylim3d(-sizedesiree*tres, sizedesiree*tres)
+        ax3d.set_xlim3d(-sizedesiree*tres, sizedesiree*tres)
+        i = i_temp
+        plt.savefig(folder_name+'/shape_spatial_coord_'+str(Tafaire[i])+'.jpeg', dpi=500, bbox_inches='tight')   
 
-        BIGtable[:,10] = tres
-        BIGtable[:,7] = Lambda
-        BIGtable[:,6] = Gamma
-        BIGtable[:,5] = manifold[:,2]
-        BIGtable[:,4] = manifold[:,1]
-        BIGtable[:,3] = manifold[:,0]
-        BIGtable[:,2] = X[:,2]
-        BIGtable[:,1] = X[:,1]
-        BIGtable[:,0] = X[:,0]
+# Load the three images
+        image1 = Image.open(folder_name+'/kappa_vs_tau_'+str(Tafaire[i])+'.jpeg')
+        image2 = Image.open(folder_name+'/T_vs_z_'+str(Tafaire[i])+'.jpeg')
+        image3 = Image.open(folder_name+'/shape_spatial_coord_'+str(Tafaire[i])+'.jpeg')
 
+        # Get the dimensions of each image
+        width1, height1 = image1.size
+        width2, height2 = image2.size
+        width3, height3 = image3.size
 
-        #np.savetxt('PERVERSION_GAMMA_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_N0_'+str(numberofcoils)+'_T_'+str(axialload)+'.txt', BIGtable )
-        #plt.show()
-        #plt.savefig('PERVERSION_GAMMA_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_N0_'+str(numberofcoils)+'_T_'+str(axialload)+'.obj' , transparent=True)
-        #plt.pause(0.1)
-        #plt.close()
-    plt.show()
+        # Determine the total width and the maximum height of the combined image
+        total_width = width1 + width3
+        max_height = max(height1+ height2, height3)
+
+        # Create a new blank image with the calculated dimensions
+        combined_image = Image.new("RGB", (total_width, max_height))
+
+        # Paste the images into the combined image
+        combined_image.paste(image1, (0, 0))
+        combined_image.paste(image2, (0, height1))
+        combined_image.paste(image3, (max(width1, width2) , 0))
+
+        # Save or show the combined image
+        combined_image.save(folder_name+"/combined_image"+str(i)+".jpg")
+        #combined_image.show()
+
+        i += 1
+    image_filenames = [folder_name+"/combined_image"+str(iind)+".jpg" for iind in range(i)]
+
+    # Load images into a list
+    images = [Image.open(image) for image in image_filenames]
+
+    # Save images as a GIF
+    gif_filename = folder_name+"/output.gif"
+    images[0].save(
+        gif_filename,
+        save_all=True,
+        append_images=images[1:],  # Append the remaining images
+        duration=500,              # Duration in milliseconds for each frame
+        loop=0                     # Loop count, 0 means infinite loop
+    )
+
+    print(f"GIF created and saved as {gif_filename}")
+    #plt.show()
 
 translation_perversion()
 
