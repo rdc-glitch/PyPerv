@@ -121,5 +121,6 @@ Selecting low values of $\Gamma < 0.5$ highlights the phenomenon of overwinding 
 ## References
 <a id="1">[1]</a> 
 McMillen, Goriely Tendril Perversion in Intrinsically Curved Rods . J. Nonlinear Sci. 12, 241–281 (2002). https://doi.org/10.1007/s00332-002-0493-1
+
 <a id="2">[2]</a> 
 Dai L , Zhu KD , Shen W , Huang X , Zhang L , Goriely A . Controllable rotational inversion in nanostructures with dual chirality. Nanoscale. 2018 Apr 5;10(14):6343-6348. doi: 10.1039/c7nr09035h. PMID: 29542757.
