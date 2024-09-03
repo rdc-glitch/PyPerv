@@ -114,7 +114,7 @@ computes the configuration connecting two helices of different chiralities for v
   <img src="./output.gif" width="650" title="hover text">
 </p>
 
-Selecting low values of $\Gamma < 0.5$ highlights the phenomenon of overwinding of the perversion (see [[2]](#2)). (Compute the code with $\Gamma = 0.3$,\ $\Lambda = 0.5$) Computational time increases for low values of $\Lambda < 0.5$ and $\Gamma$. 
+Selecting low values of $\Gamma < 0.5$ highlights the phenomenon of overwinding of the perversion (see [[2]](#2)). Compute the code for instance with $\Gamma = 0.3$$, $\Lambda = 0.5$. Warning : Computational time increases for low values of $\Lambda < 0.5$ and $\Gamma$. 
 
 
 
