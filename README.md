@@ -99,7 +99,7 @@ The function returns :
   <img src="./table.png" width="650" title="hover text">
 </p>
 
-Corresponding respectively to the coordinates of the centerline of the rod in laboratory frame, Darboux curvature, end parameters of the simulation which are repeated every line. The last column corresponds to the curvilinear distance between points which can be tuned directly in the code as 'tres'.
+Corresponding respectively to the coordinates of the centerline of the rod in laboratory frame, Darboux curvature, end parameters of the simulation which are repeated every line. The last column corresponds to the curvilinear distance between points which can be tuned directly in the code as 'tres'. Integration error on the space curve may induce a misalignment between the two helices of opposite chirality. To minimize this misalignment, the resolution of the integration may be improved by reducing 'tres', and the resolution of the shooting method by increasing 'tailletheta'. 
 
 ## Example of usage : translation of a rod with one perversion
 
