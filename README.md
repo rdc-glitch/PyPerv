@@ -114,7 +114,7 @@ computes the configuration connecting two helices of different chiralities for v
   <img src="./output.gif" width="650" title="hover text">
 </p>
 
-For low values of $\Lambda$, the code returns wrong heteroclinic connection. 
+For low values of $\Lambda < 0.5$, the code returns wrong heteroclinic connection. 
 
 ## References
 <a id="1">[1]</a> 
