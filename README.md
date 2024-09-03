@@ -114,6 +114,8 @@ computes the configuration connecting two helices of different chiralities for v
   <img src="./output.gif" width="650" title="hover text">
 </p>
 
+For low values of $\Lambda$, the code returns wrong heteroclinic connection. 
+
 ## References
 <a id="1">[1]</a> 
 McMillen, Goriely Tendril Perversion in Intrinsically Curved Rods . J. Nonlinear Sci. 12, 241–281 (2002). https://doi.org/10.1007/s00332-002-0493-1
