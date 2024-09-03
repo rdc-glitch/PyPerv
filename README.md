@@ -114,8 +114,12 @@ computes the configuration connecting two helices of different chiralities for v
   <img src="./output.gif" width="650" title="hover text">
 </p>
 
-For low values of $\Lambda < 0.5$, the code returns wrong heteroclinic connection. (correction in progress)
+Selecting low values of $\Gamma < 0.5$ highlights the phenomenon of overwinding of the perversion (see [[2]](#2)). (Compute the code with $\Gamma = 0.3$,\ $\Lambda = 0.5$) Computational time increases for low values of $\Lambda < 0.5$ and $\Gamma$. 
+
+
 
 ## References
 <a id="1">[1]</a> 
 McMillen, Goriely Tendril Perversion in Intrinsically Curved Rods . J. Nonlinear Sci. 12, 241–281 (2002). https://doi.org/10.1007/s00332-002-0493-1
+<a id="2">[2]</a> 
+Dai L , Zhu KD , Shen W , Huang X , Zhang L , Goriely A . Controllable rotational inversion in nanostructures with dual chirality. Nanoscale. 2018 Apr 5;10(14):6343-6348. doi: 10.1039/c7nr09035h. PMID: 29542757.
