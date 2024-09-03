@@ -42,9 +42,9 @@ def translation_perversion():
     else:
         numberofcoils = float(numberofcoils)
 
-    resolution_force = (input('Number of points in force (positive integer) - press enter for default value 8 - :'))
+    resolution_force = (input('Number of points in force (positive integer) - press enter for default value 10 - :'))
     if resolution_force == '':
-        resolution_force = 8
+        resolution_force = 10
     else:
         resolution_force = int(resolution_force)
     folder_name = 'fig_result_Gamma_'+str(Gamma)+'_Lambda_'+str(Lambda)+'_Numberofcoils_'+str(numberofcoils)+'_numberofforcepoints_'+str(resolution_force)
@@ -264,7 +264,8 @@ def translation_perversion():
                 sol_test = np.flip(sol_test[:,:], axis = 0)
 
                 indcutlist.append(approx_perv_ind+indcut)
-                if np.sqrt(sol_at_this_phase[approx_perv_ind, 3]**2+sol_at_this_phase[approx_perv_ind, 4]**2) < kappainit:
+                indperv = np.argmin((sol_at_this_phase[:approx_perv_ind+indcut,5]**2))
+                if np.sqrt(sol_at_this_phase[indperv, 3]**2+sol_at_this_phase[indperv, 4]**2) < 1:
                     deltalist.append( (sol_at_this_phase[approx_perv_ind+indcut, 3]-kappainit)**2+ (sol_at_this_phase[approx_perv_ind+indcut, 5]-tauinit)**2)
                 else:
                     deltalist.append( 1e9)
@@ -272,6 +273,11 @@ def translation_perversion():
                 return 0
             else:
                 i = np.argmin(deltalist)
+                #plt.plot(np.sqrt(solperv[j_thetalistkept[i],:indcutlist[i],3]**2+solperv[j_thetalistkept[i],:indcutlist[i],4]**2  ), solperv[j_thetalistkept[i],:indcutlist[i],5] )
+                #indperv = np.argmin((solperv[j_thetalistkept[i],:indcutlist[i],5] **2))
+                #print(np.sqrt(solperv[j_thetalistkept[i],indperv,3]**2+solperv[j_thetalistkept[i],indperv,4]**2  ))
+                #plt.show()
+
                 return  (solperv[j_thetalistkept[i],:indcutlist[i],:])
 
         while len(deltalist) < 1:
@@ -280,8 +286,8 @@ def translation_perversion():
 
 
 
-        for i in range(np.size(solperv_homo_long[:,5])):
-            indperv = np.argmin((solperv_homo_long[:,5]**2))
+        #for i in range(np.size(solperv_homo_long[:,5])):
+        indperv = np.argmin((solperv_homo_long[:,5]**2))
         solcomplete = np.zeros(( 2*indperv, 3))
         solcomplete[:indperv, :] = solperv_homo_long[:indperv,3:]
         solcomplete[indperv:, :] = np.flip(solperv_homo_long[:indperv,3:], axis = 0)
